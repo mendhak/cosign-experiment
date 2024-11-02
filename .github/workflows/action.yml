@@ -1,0 +1,14 @@
+name: test cosign
+
+on:
+    workflow_dispatch: 
+
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Cosign
+              uses: sigstore/cosign-installer@v3.7.0
+            - name: Check install!
+              run: cosign version
