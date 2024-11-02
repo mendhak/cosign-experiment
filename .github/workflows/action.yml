@@ -4,6 +4,12 @@ on:
     workflow_dispatch: 
 
 
+permissions:
+      contents: read
+      packages: write
+      id-token: write 
+
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -12,3 +18,7 @@ jobs:
               uses: sigstore/cosign-installer@v3.7.0
             - name: Check install!
               run: cosign version
+            - name: Sign a file
+              run: |
+                cosign sign-blob --yes README.md
+            
