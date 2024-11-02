@@ -1,4 +1,4 @@
-name: test cosign
+name: test docker build
 
 on:
     workflow_dispatch: 
