@@ -40,11 +40,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - id: docker_meta
-        uses: docker/metadata-action@v4.4.0
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/mendhak/test-image
-          tags: type=sha,format=long
+          images: |
+              ghcr.io/mendhak/test-images
 
       - name: Build and Push container images
         uses: docker/build-push-action@v4.0.0
@@ -52,13 +53,13 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
 
 
       - name: Sign the images with GitHub OIDC Token
         env:
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
-          TAGS: ${{ steps.docker_meta.outputs.tags }}
+          TAGS: ${{ steps.meta.outputs.tags }}
         run: |
           images=""
           for tag in ${TAGS}; do
