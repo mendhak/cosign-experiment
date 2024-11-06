@@ -22,7 +22,7 @@ jobs:
               with:
                 subject-path: README.md
 
-            - run: cp ${{ steps.attest.outputs.bundle-path }} .
+            - run: cp ${{ steps.attest.outputs.bundle-path }} ./cosign.bundle
               name: Copy bundle to current directory to not mess up zips later
 
             - uses: actions/upload-artifact@v4
@@ -30,7 +30,7 @@ jobs:
                 name: Build Artifacts
                 path: | 
                   README.md
-                  ${{ steps.attest.outputs.bundle-path }}
+                  cosign.bundle
 
             - name: The Cosign Command
               run: echo cosign verify-blob README.md --bundle attestation.jsonl --new-bundle-format --cert-oidc-issuer https://token.actions.githubusercontent.com --cert-identity https://github.com/${GITHUB_WORKFLOW_REF}
