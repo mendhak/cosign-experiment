@@ -28,3 +28,5 @@ jobs:
                 path: | 
                   README.md
                   ${{ steps.attest.outputs.bundle-path }}
+
+            - run: echo cosign verify-blob cosign-experiment/cosign-experiment/README.md --bundle _temp/V4iaWO/attestation.jsonl --new-bundle-format --cert-oidc-issuer https://token.actions.githubusercontent.com --cert-identity https://github.com/${GITHUB_WORKFLOW_REF}
