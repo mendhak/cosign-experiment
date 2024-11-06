@@ -29,4 +29,9 @@ jobs:
                   README.md
                   ${{ steps.attest.outputs.bundle-path }}
 
-            - run: echo cosign verify-blob cosign-experiment/cosign-experiment/README.md --bundle _temp/V4iaWO/attestation.jsonl --new-bundle-format --cert-oidc-issuer https://token.actions.githubusercontent.com --cert-identity https://github.com/${GITHUB_WORKFLOW_REF}
+            - name: The Cosign Command
+              run: echo cosign verify-blob README.md --bundle attestation.jsonl --new-bundle-format --cert-oidc-issuer https://token.actions.githubusercontent.com --cert-identity https://github.com/${GITHUB_WORKFLOW_REF}
+            - name: The Rekor URI
+              run: | 
+                logIndex=$(jq -r '.verificationMaterial.tlogEntries[0].logIndex' < _temp/V4iaWO/attestation.jsonl)
+                echo https://search.sigstore.dev/?logIndex=${logIndex}
