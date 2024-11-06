@@ -21,5 +21,10 @@ jobs:
               id: attest
               with:
                 subject-path: README.md
-            - run: echo ${{ steps.attest.outputs.bundle-path }}
-            
+
+            - uses: actions/upload-artifact@v4
+              with:
+                name: Build Artifacts
+                path: | 
+                  README.md
+                  ${{ steps.attest.outputs.bundle-path }}
