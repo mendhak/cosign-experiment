@@ -33,5 +33,5 @@ jobs:
               run: echo cosign verify-blob README.md --bundle attestation.jsonl --new-bundle-format --cert-oidc-issuer https://token.actions.githubusercontent.com --cert-identity https://github.com/${GITHUB_WORKFLOW_REF}
             - name: The Rekor URI
               run: | 
-                logIndex=$(jq -r '.verificationMaterial.tlogEntries[0].logIndex' < _temp/V4iaWO/attestation.jsonl)
+                logIndex=$(jq -r '.verificationMaterial.tlogEntries[0].logIndex' < ${{ steps.attest.outputs.bundle-path }})
                 echo https://search.sigstore.dev/?logIndex=${logIndex}
