@@ -18,7 +18,7 @@ jobs:
             - name: Check out directory
               uses: actions/checkout@v4
             - uses: actions/attest-build-provenance@v1
-              name: attest
+              id: attest
               with:
                 subject-path: README.md
             - run: echo ${{ steps.attest.outputs.bundle-path }}
