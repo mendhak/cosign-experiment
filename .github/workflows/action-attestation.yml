@@ -1,6 +1,9 @@
 name: Attestation Action
 
 on:
+    push:
+      tags:
+        - '*'
     workflow_dispatch: 
 
 
